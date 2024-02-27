@@ -22,7 +22,7 @@ import { UploadButton } from "../ui/uploadthing";
 import { useToast } from "../ui/use-toast";
 import Image from "next/image";
 import axios from "axios"
-import { Loader2, XCircle } from "lucide-react";
+import { Eye, Loader2, Pencil, PencilLine, Trash, Trash2, XCircle } from "lucide-react";
 import useLocation from "@/hooks/useLocation";
 import { ICity, IState, State } from 'country-state-city';
 import {
@@ -32,7 +32,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-
+import { useRouter } from "next/navigation"
 
 interface AddHotelFormProps {
   hotel: hotelWithRooms | null;
@@ -83,12 +83,13 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const { toast } = useToast();
   const { getAllCountries, getCountryStates, getStateCities } = useLocation()
-
+  const router = useRouter()
+  const [iseHotelDeleting, setIsHotelDeleting] = useState(false)
   const countries = getAllCountries()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
+    defaultValues: hotel || {
       title: "",
       desc: "",
       img: "",
@@ -106,10 +107,48 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
       bikeRental: false,
       freeWifi: false,
       movieNights: false,
+      swimmingPool: false,
+      coffeeShop: false
     },
   });
+
+  useEffect(() => {
+    if (typeof image === 'string')
+      form.setValue('img', image, {
+        shouldDirty: true,
+        shouldValidate: true,
+        shouldTouch: true
+      })
+  }, [image])
+
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    // console.log(values);
+    setIsLoading(true)
+    if (hotel) {
+      //update
+      axios.patch(`/api/hotel/${hotel?.id}`, values).then((res) => {
+        toast({ variant: 'default', title: `hotel updated!` });
+        router.push(`/hotel/${res.data.id}`)
+        setIsLoading(false)
+      }).catch((err) => {
+        console.error(err)
+        toast({ variant: 'destructive', title: `Something went wrong!` });
+        setIsLoading(false)
+
+      })
+
+    } else {
+      axios.post("/api/hotel", values).then((res) => {
+        toast({ variant: 'default', title: `hotel created sucessfully!` });
+        router.push(`/hotel/${res.data.id}`)
+        setIsLoading(false)
+      }).catch((err) => {
+        console.error(err)
+        toast({ variant: 'destructive', title: `Something went wrong!` });
+        setIsLoading(false)
+
+      })
+    }
   }
   function handleImageDelete(image: string) {
     setIsImgDeleting(true)
@@ -147,6 +186,27 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
       setCities(stateCities)
   }, [form.watch('country'), form.watch('state')])
 
+  const handleDleteHotel = async (hotel: hotelWithRooms) => {
+    setIsHotelDeleting(true)
+    //imgae delete
+    const getImageKey = (src: string) =>  src.substring(src.lastIndexOf("/") + 1); 
+ 
+    try {
+      const imageKey = getImageKey(hotel?.img)
+      // console.log("img key from deltehotel",getImageKey(hotel?.img))
+      await axios.post("/api/uploadthing/delete", { imageKey })
+      await axios.delete(`/api/hotel/${hotel.id}`)
+      setIsHotelDeleting(false)
+      toast({
+        variant: "default",
+        title: "Hotel removed"
+      })
+    } catch (err: any) {
+      console.log(err)
+      setIsHotelDeleting(false)
+      toast({ variant: 'destructive', title: 'hotel deletion  failed' })
+    }
+  }
 
   return (
     <div>
@@ -478,57 +538,65 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
                     </FormItem>
                   )} />
 
-             
+
 
 
 
               </div>
               <FormField
-                  name="city"
-                  control={form.control}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Select City</FormLabel>
-                      <FormDescription>which city is your hotel located</FormDescription>
-                      <Select disabled={isLoading || cities.length < 1}
-                        onValueChange={field.onChange}
-                        value={field.value}
-                        defaultValue={field.value}
-                      >
-                        <SelectTrigger className="bg-background">
-                          <SelectValue defaultValue={field.value} placeholder="Select a city" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {cities.map((city) => {
-                            return <SelectItem key={city.name} value={city.name}>{city.name}</SelectItem>
-                          })}
+                name="city"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Select City</FormLabel>
+                    <FormDescription>which city is your hotel located</FormDescription>
+                    <Select disabled={isLoading || cities.length < 1}
+                      onValueChange={field.onChange}
+                      value={field.value}
+                      defaultValue={field.value}
+                    >
+                      <SelectTrigger className="bg-background">
+                        <SelectValue defaultValue={field.value} placeholder="Select a city" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {cities.map((city) => {
+                          return <SelectItem key={city.name} value={city.name}>{city.name}</SelectItem>
+                        })}
 
 
-                        </SelectContent>
-                      </Select>
+                      </SelectContent>
+                    </Select>
 
-                    </FormItem>
-                  )} />
+                  </FormItem>
+                )} />
 
-                <FormField
-                  control={form.control}
-                  name="locationDesc"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Location Description</FormLabel>
-                      <FormDescription>Provide detailed location Desciption</FormDescription>
+              <FormField
+                control={form.control}
+                name="locationDesc"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Location Description</FormLabel>
+                    <FormDescription>Provide detailed location Desciption</FormDescription>
 
-                      <FormControl>
-                        <Textarea
-                          placeholder="Located near a beach "
-                          {...field}
-                        />
-                      </FormControl>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Located near a beach "
+                        {...field}
+                      />
+                    </FormControl>
 
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="flex justify-between gap-3 flex-wrap">
+                {hotel && <Button className="max-w-[150px]" variant="ghost" onClick={() => handleDleteHotel(hotel)}>{iseHotelDeleting ? <><Loader2 className="mr-2 w-4 h-4" /> Deleting</> : <><Trash className="mr-2 w-4 h-4" /> Delete </>}</Button>}
+
+                {hotel ? <Button disabled={isLoading} className="max-w-[150px]">{isLoading ? <><Loader2 className="mr-2 w-4 h-4" />Updating</> : <><PencilLine className="mr-2 w-4 h-4" />Update</>}</Button> : <Button>{isLoading ? <><Loader2 className="mr-2 w-4 h-4" />Creating</> : <><Pencil className="mr-2 w-4 h-4" />Create HOtel</>}</Button>}
+{hotel && <Button onClick={()=>router.push(`/hotel-details/${hotel.id}`)} className="max-w-[150px]" type="button" variant="outline" ><Eye className="mr-2 w-4 h-4"  />View</Button>}
+
+
+              </div>
 
 
             </div>
