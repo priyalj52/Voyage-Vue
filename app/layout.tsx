@@ -5,6 +5,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import Navbar from "@/components/layout/Navbar";
 import { ThemeProvider } from "@/components/theme-provider";
 import Container from "@/components/Container";
+import { Toaster } from "@/components/ui/toaster";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -31,11 +32,13 @@ export default function RootLayout({
               <Navbar />
               <section className=" flex-grow">
                 <Container>
-                
+                <Toaster />
                 {children}
+               
                 </Container>
                 </section>
             </main>
+         
           </ThemeProvider>
         </body>
       </html>
