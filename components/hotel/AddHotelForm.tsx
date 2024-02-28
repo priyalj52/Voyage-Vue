@@ -44,6 +44,8 @@ import {
 } from "@/components/ui/select"
 import { useRouter } from "next/navigation"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Separator } from "../ui/separator";
+import RoomCard from "../room/RoomCard";
 
 interface AddHotelFormProps {
   hotel: hotelWithRooms | null;
@@ -647,8 +649,19 @@ const handleDialogOpen=()=>{
 
 {hotel && <Button onClick={()=>router.push(`/hotel-details/${hotel.id}`)} className="max-w-[150px]" type="button" variant="outline" ><Eye className="mr-2 w-4 h-4"  />View</Button>}
 
-
               </div>
+              {hotel && hotel.rooms.length
+&&
+<div>
+<Separator />
+<h3 className="text-lg font-semibold my-4">Hotel Rooms</h3>
+<div className="grid grid-cols-1 2xl:grid-cols-2 gap-6">
+{hotel.rooms.map((room)=>{return <RoomCard key={room.id} hotel={hotel}  room={room}  />})}
+</div>
+</div>
+
+
+}
 
 
             </div>
