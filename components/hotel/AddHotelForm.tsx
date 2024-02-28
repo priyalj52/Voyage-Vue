@@ -623,7 +623,7 @@ const handleDialogOpen=()=>{
                 {hotel ? <Button disabled={isLoading} className="max-w-[150px]">{isLoading ? <><Loader2 className="mr-2 w-4 h-4" />Updating</> : <><PencilLine className="mr-2 w-4 h-4" />Update</>}</Button> : <Button>{isLoading ? <><Loader2 className="mr-2 w-4 h-4" />Creating</> : <><Pencil className="mr-2 w-4 h-4" />Create HOtel</>}</Button>}
 
 
-                <Dialog open onOpenChange={setOpen} >
+                <Dialog open={open} onOpenChange={setOpen} >
 
   <DialogTrigger>
     <Button variant={"outline"} type="button" className="max-w-[150px]">

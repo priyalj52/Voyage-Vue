@@ -418,7 +418,7 @@ const AddRoomForm = ({ hotel, room, handleDialogOpen }: AddRoomFormProps) => {
                 )}
               />
             </div>
-            <div className="flex flex-row  gap-6">
+            <div className="flex flex-row justify-center gap-6">
               <div className="flex-1 flex flex-col gap-6">
                 <FormField
                   control={form.control}
@@ -501,7 +501,7 @@ const AddRoomForm = ({ hotel, room, handleDialogOpen }: AddRoomFormProps) => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>breakfast price</FormLabel>
-                      <FormDescription></FormDescription>
+                      <FormDescription>Enter Price in rupees</FormDescription>
 
                       <FormControl>
                         <Input type="number" min={0} {...field} />
@@ -549,24 +549,7 @@ const AddRoomForm = ({ hotel, room, handleDialogOpen }: AddRoomFormProps) => {
                   )}
                 />
 
-                <FormField
-                  control={form.control}
-                  name="bathRoomCount"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>bathroom count</FormLabel>
-                      <FormDescription>
-                        How many bathrooms are in this room
-                      </FormDescription>
-
-                      <FormControl>
-                        <Input type="number" min={0} max={8} {...field} />
-                      </FormControl>
-
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+               
               </div>
             </div>
 
