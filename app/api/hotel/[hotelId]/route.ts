@@ -23,7 +23,7 @@ export async function PATCH(req:Request,{params}:{params:{hotelId:string}}){
   return NextResponse.json(hotel,{status:200})
     }catch(err){
         console.log("Error at api/hotel/hotelId patch route",err)
-        return new NextResponse.json("Internal Server error",{status:500})
+        return NextResponse.json("Internal Server error",{status:500})
     }
 }
 
@@ -47,6 +47,6 @@ export async function DELETE(req:Request,{params}:{params:{hotelId:string}}){
   return NextResponse.json(hotel,{status:200})
     }catch(err){
         console.log("Error at api/hotel/hotelId delete route",err)
-        return new NextResponse.json("Internal Server error",{status:500})
+        return NextResponse.json("Internal Server error",{status:500})
     }
 }

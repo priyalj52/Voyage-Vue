@@ -8,16 +8,16 @@ export async function POST(req:Request){
         const {userId}=auth()
         if(!userId)
         return  new NextResponse("Unauthorised",{status:401})
-  const hotel=await prismaDB.hotel.create({
+  const room=await prismaDB.room.create({
     data:{
-        ...body,
-        userID:userId,
+        ...body
+       
     }
   })
-  return NextResponse.json(hotel,{status:200})
+  return NextResponse.json(room,{status:200})
 
     }catch(err){
-        console.log("Error at api/hotel post route",err)
+        console.log("Error at api/room post route",err)
         return  NextResponse.json("Internal Server error",{status:500})
     }
 }
