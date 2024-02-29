@@ -142,11 +142,11 @@ const AddRoomForm = ({ hotel, room, handleDialogOpen }: AddRoomFormProps) => {
       axios.post("/api/room", { ...values, hotelId: hotel?.id }).then((res) => {
         toast({ variant: 'default', title: `Room created sucessfully!` });
         router.refresh()
-    
+
         setIsLoading(false)
         handleDialogOpen()
       }).catch((err) => {
-        console.error(err,"error at room")
+        console.error(err, "error at room")
         toast({ variant: 'destructive', title: `Something went wrong!` });
         setIsLoading(false)
 
@@ -549,7 +549,7 @@ const AddRoomForm = ({ hotel, room, handleDialogOpen }: AddRoomFormProps) => {
                   )}
                 />
 
-               
+
               </div>
             </div>
 
