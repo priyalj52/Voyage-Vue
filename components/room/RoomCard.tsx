@@ -147,7 +147,7 @@ const RoomCard = ({ hotel, room, bookings = [] }: RoomCardProps) => {
                         <Mountain className='w-4 h-4' /> mOuntain View
                     </AmenityItem>}
 
-                    {room.aircondition && <AmenityItem>
+                    {room. airCondition && <AmenityItem>
                         <AirVent className='w-4 h-4' />Air Conditioned
                     </AmenityItem>}
 
