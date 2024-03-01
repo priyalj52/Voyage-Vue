@@ -1,6 +1,6 @@
 'use client'
 import { Booking, Room } from '@prisma/client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../ui/card';
 import Image from 'next/image';
 import AmenityItem from '../ui/amenity';
@@ -19,6 +19,11 @@ import {
 import AddRoomForm from './AddRoomForm';
 import axios from 'axios';
 import { useToast } from '../ui/use-toast';
+import { DatePickerWithRange } from './DateRangePicker';
+
+import { addDays, differenceInCalendarDays, setDay } from 'date-fns';
+import { DateRange } from "react-day-picker"
+import { Checkbox } from '../ui/checkbox';
 interface RoomCardProps {
     hotel?: Hotel & {
         rooms: Room[];
@@ -37,6 +42,32 @@ const RoomCard = ({ hotel, room, bookings = [] }: RoomCardProps) => {
     const router = useRouter()
     const { toast } = useToast()
     const isPathHasDetails = path?.includes("hotel-details");
+
+    const [date, setDate] = useState<DateRange | undefined>()
+    const [days, setdays] = useState(1)
+    const [totalPrice, setTotalPrice] = useState(room.roomCost)
+    const [includeBreakfast, setIncludeBreakfast] = useState(false)
+
+
+    useEffect(() => {
+        if (date && date.to && date.from) {
+            const countDays = differenceInCalendarDays(date.to, date.from)
+            setdays(countDays)
+            if (countDays && room.roomCost) {
+                if (includeBreakfast && room.breakfastPrice) {
+                    setTotalPrice((countDays * room.roomCost) + (countDays * room.breakfastPrice))
+                } else {
+                    setTotalPrice(countDays * room.roomCost)
+                }
+
+
+            }else{
+                setTotalPrice(room.roomCost)
+            }
+        }
+
+    }, [date, room.roomCost, includeBreakfast])
+
     const handleDialogOpen = () => {
         setOpen((prev) => !prev)
     }
@@ -64,13 +95,13 @@ const RoomCard = ({ hotel, room, bookings = [] }: RoomCardProps) => {
                         title: "Something went wrong"
                     })
                 })
-        }).catch((err)=>{
+        }).catch((err) => {
             setIsLoading(false)
-                    console.log(err, "err on deleting image")
-                    toast({
-                        variant: "destructive",
-                        title: "Something went wrong"
-                    })
+            console.log(err, "err on deleting image")
+            toast({
+                variant: "destructive",
+                title: "Something went wrong"
+            })
         })
 
 
@@ -147,7 +178,7 @@ const RoomCard = ({ hotel, room, bookings = [] }: RoomCardProps) => {
                         <Mountain className='w-4 h-4' /> mOuntain View
                     </AmenityItem>}
 
-                    {room. airCondition && <AmenityItem>
+                    {room.airCondition && <AmenityItem>
                         <AirVent className='w-4 h-4' />Air Conditioned
                     </AmenityItem>}
 
@@ -167,7 +198,30 @@ const RoomCard = ({ hotel, room, bookings = [] }: RoomCardProps) => {
 
             </CardContent>
             <CardFooter>
-                {isPathHasDetails ? <div className="">hotels page</div> : <div className="flex w-full justify-between">
+                {isPathHasDetails ? <div className="flex flex-col gap-6">
+                    <div>
+                        <div className='mb-2'>select the time period you will be staying for.</div>
+                        <DatePickerWithRange date={date} setDate={setDate} />
+                    </div>
+{
+    room.breakfastPrice >0  && <div>
+        <div className="mb-2">
+            Do you want breakfast for all days?
+        </div>
+        <div className="flex items-center space-x-2">
+            <Checkbox id="breakfast" onCheckedChange={(val)=>setIncludeBreakfast(!!val)}/>
+            <label htmlFor='breakfast' className='text-sm'>Include breakfast?</label>
+        </div>
+    </div>
+}
+
+
+                    <div>Total Price :   <span className='font-bold'>&#8377; ${totalPrice}</span> for<span  className='font-bold'>
+                        {days}days </span></div>
+
+
+
+                </div> : <div className="flex w-full justify-between">
                     <Button onClick={() => handleRoomDelete(room)} disabled={isLoading} type='button' variant={'ghost'}>
                         {isLoading ? <><Loader2 className='mr-2 w-4 h-4' />Deleting</> : <><Trash className='mr-2 w-4 h-4' />Delete</>}
                     </Button>

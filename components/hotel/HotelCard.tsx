@@ -114,7 +114,7 @@ console.log("hotel from hotel card",hotel)
     </>}
 </div>
 {isMyHotels && 
-<Button  variant={"outline"} onCLick={()=>router.push(`/hotel/${hotel.id}`)}>Edit</Button> }
+<Button  variant={"outline"} onClick={()=>router.push(`/hotel/${hotel.id}`)}>Edit</Button> }
           </div>
         </div>
       </div>
