@@ -3,10 +3,10 @@ import { create } from "zustand"
 import { persist } from "zustand/middleware"
 interface BookRoomStore {
     bookingRoomData: RoomData | null,
-    paymentIntent: string | null,
+    paymentIntentId: string | null,
     clientSecret: string | undefined,
     setRoomData:(data:RoomData)=>void,
-    setPaymentIntent: (paymentIntent: string) =>void,
+    setPaymentIntentId: (paymentIntentId: string) =>void,
     setClientSecret: (clientSecret: string) =>void,
     resetBookRoom: () => void
 
@@ -25,13 +25,13 @@ const useBookRoom = create<BookRoomStore>()(
 
         {
             bookingRoomData: null,
-            paymentIntent: null,
+            paymentIntentId: null,
             clientSecret: undefined,
             setRoomData: (data: RoomData) => {
                 set({ bookingRoomData: data })
             },
-                setPaymentIntent: (paymentIntent: string) => {
-                set({ paymentIntent })
+                setPaymentIntentId: (paymentIntentId: string) => {
+                set({ paymentIntentId })
             },
             setClientSecret: (clientSecret: string) => {
                 set({ clientSecret })
@@ -40,7 +40,7 @@ const useBookRoom = create<BookRoomStore>()(
                 set({
                     bookingRoomData: null,
                     clientSecret: undefined,
-                    paymentIntent: null
+                    paymentIntentId: null
                 })
             }
 

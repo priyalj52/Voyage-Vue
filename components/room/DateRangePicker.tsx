@@ -18,11 +18,12 @@ import {
 interface datePickerProps{
 className?:React.HTMLAttributes<HTMLDivElement>;
 date:DateRange | undefined,
-setDate:React.Dispatch<React.SetStateAction<DateRange | undefined>>
+setDate:React.Dispatch<React.SetStateAction<DateRange | undefined>>,
+disabledDates:Date[]
 }
 
 export function DatePickerWithRange({
-  className,date,setDate
+  className,date,setDate,disabledDates
 }: datePickerProps) {
  
   return (
@@ -61,6 +62,7 @@ export function DatePickerWithRange({
             selected={date}
             onSelect={setDate}
             numberOfMonths={2}
+            disabled={disabledDates}
           />
         </PopoverContent>
       </Popover>
