@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StripeElementsOptions, loadStripe } from "@stripe/stripe-js";
 import useBookRoom from "@/hooks/useBookRoom";
 import RoomCard from "../room/RoomCard";
@@ -28,9 +28,27 @@ const BookRoomUI = () => {
     },
   };
   const router = useRouter();
+useEffect(()=>{
+setPageLoaded(true)
+},[])
+
   const handleSetSuccess = (val: boolean) => {
     setPaymentSuccess(val);
   };
+  if (pageLoaded && !paymentSuccess&& (!bookingRoomData && !clientSecret)) return <div className="flex flex-col items-center gap-4">
+  <div className="text-red-600">Oops this page cannot be loaded properly</div>
+  <div className="flex items-center gap-4">
+  <Button variant={"outline"} onClick={() => router.push("/")}>
+           Home
+          </Button>
+          <Button onClick={() => router.push("/my-bookings")}>
+            view bookings
+          </Button>
+  </div>
+  
+      </div>;
+  
+
   if (paymentSuccess){
     return (
       <div className="flex flex-col items-center gap-4">
@@ -41,19 +59,7 @@ const BookRoomUI = () => {
       </div>
     );}
 
-    if (!paymentSuccess&& (!bookingRoomData && !clientSecret)) return <div className="flex flex-col items-center gap-4">
-<div className="text-red-600">Oops this page cannot be loaded properly</div>
-<div className="flex items-center gap-4">
-<Button variant={"outline"} onClick={() => router.push("/")}>
-         Home
-        </Button>
-        <Button onClick={() => router.push("/my-bookings")}>
-          view bookings
-        </Button>
-</div>
-
-    </div>;
-
+    
 
   if (!bookingRoomData || !clientSecret) return <div>Loading... </div>;
   return (

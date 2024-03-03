@@ -179,7 +179,7 @@ const isPathBookRoom=path?.includes("/book-room")
 
 const disableddates=useMemo(()=>{
 let dates:Date[]=[]
-const roomBookings=bookings.filter((booking)=>booking.roomId===room.id)
+const roomBookings=bookings.filter((booking)=>booking.roomId===room.id && booking.paymentStatus)
 roomBookings.forEach((booking)=>{
   const range=eachDayOfInterval({
     start:new Date(booking.startDate),

@@ -16,11 +16,46 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Terminal } from "lucide-react";
+import { DateRange } from "react-day-picker";
+import { endOfDay, isWithinInterval, startOfDay } from "date-fns";
+import { Booking } from "@prisma/client";
 interface CheckoutFormProps {
   clientSecret: string;
   handleSetSuccess: (val: boolean) => void;
 }
-
+type DateRangeType = {
+  startDate: Date;
+  endDate: Date;
+};
+//checking as if already booking between 13-15 and someone wishes to bok from 14-16 then overlap so to avoid that
+function hasOverlap(
+  startDate: Date,
+  endDate: Date,
+  dateRanges: DateRangeType[]
+) {
+  const targetInterval = {
+    start: startOfDay(new Date(startDate)),
+    end: endOfDay(new Date(endDate)),
+  };
+  for (const range of dateRanges) {
+    const rangeStart = startOfDay(new Date(range.startDate));
+    const rangeEnd = endOfDay(new Date(range.endDate));
+    if (
+      isWithinInterval(targetInterval.start, {
+        start: rangeStart,
+        end: rangeEnd,
+      }) ||
+      isWithinInterval(targetInterval.end, {
+        start: rangeStart,
+        end: rangeEnd,
+      }) ||
+      (targetInterval.start < rangeStart && targetInterval.end > rangeEnd) //8-13 book but inbetween is booked so this is
+    ) {
+      return true;
+    }
+  }
+  return false
+}
 const CheckoutForm = ({
   clientSecret,
   handleSetSuccess,
@@ -49,12 +84,33 @@ const CheckoutForm = ({
     if (!stripe || !elements || !bookingRoomData) return;
     try {
       //date overlaps check
-    //   const bookings=await axios.get(`/api/booking/${bookingRoomData.room.id}`)
-    // return console.log("bookings in hote",bookings.data)
-        stripe.confirmPayment({ elements, redirect: "if_required" })
+      const bookings = await axios.get(
+        `/api/booking/${bookingRoomData.room.id}`
+      );
+      // return console.log("bookings in hote",bookings.data)
+      const roomBookingdates = bookings.data.map((booking: Booking) => {
+        return {
+          startDate: booking.startDate,
+          endDate: booking.endDate,
+        };
+      });
+      const overlapfound = hasOverlap(
+        bookingRoomData.startDate,
+        bookingRoomData.endDate,
+        roomBookingdates
+      );
+      if(overlapfound){
+        setIsLoading(false)
+        return  toast({
+          variant: "destructive",
+          title: `Oops ,some of the days are already reserved so please go back and  book for different dates please`,
+        });
+      }
+      stripe
+        .confirmPayment({ elements, redirect: "if_required" })
         .then((res) => {
           console.log("res", res);
-        
+
           if (!res.error) {
             console.log("paymemy intent id", res.paymentIntent.id);
             axios
@@ -86,15 +142,13 @@ const CheckoutForm = ({
       console.log(err);
       setIsLoading(false);
     }
-    alert("hey room booked")
+    alert("hey room booked");
     // router.refresh();
     //             resetBookRoom();
     //             handleSetSuccess(true);
     //             setIsLoading(false);
     // router.push("/")
-  
   };
-
 
   return (
     <div>

@@ -62,9 +62,15 @@ export async function GET(req:Request,{params}:{params:{Id:string}}){
       return  new NextResponse("room id is req",{status:400})
       if(!userId)
       return  new NextResponse("Unauthorised",{status:401})
+    const yesterday=new Date()
+    yesterday.setDate(yesterday.getDate()-1) //to get booking from today
 const bookings=await prismaDB.booking.findMany({
   where:{
-      roomId:params.Id
+      roomId:params.Id,
+      paymentStatus:true,
+      endDate:{
+        gt:yesterday
+      }
   },
   
 })
