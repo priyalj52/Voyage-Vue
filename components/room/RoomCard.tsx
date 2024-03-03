@@ -73,7 +73,7 @@ const RoomCard = ({ hotel, room, bookings = [] }: RoomCardProps) => {
   const router = useRouter();
   const { toast } = useToast();
   const isPathHasDetails = path?.includes("hotel-details");
-
+const isPathBookRoom=path?.includes("/book-room")
   const [date, setDate] = useState<DateRange | undefined>();
   const [days, setdays] = useState(1);
   const [totalPrice, setTotalPrice] = useState(room.roomCost);
@@ -97,14 +97,15 @@ const RoomCard = ({ hotel, room, bookings = [] }: RoomCardProps) => {
     if (date?.to && date?.from) {
       setIsBookingLoading(true)
       //of type global state
-      const bookingRoomdata = {
+      const bookingRoomData = {
         room,
         totalPrice,
         breakfastIncluded: includeBreakfast,
         startDate: date?.from,
         endDate: date?.to
       }
-      setRoomData(bookingRoomdata)
+      setRoomData(bookingRoomData)
+      console.log("book in usebook roomcard", bookingRoomData)
       fetch("/api/create-payment-intent/", {
         method: 'POST',
         headers: {
@@ -123,17 +124,22 @@ const RoomCard = ({ hotel, room, bookings = [] }: RoomCardProps) => {
         })
       }).then((res) => {
         setIsBookingLoading(false)
+        console.log(res,"heyyyy")
         if (res.status === 401)
           return router.push("/login")
-        return res.json()
+        console.log(res,"hey")
+        if(res.status!=500)
+        return res?.json()
 
 
       }).then((data) => {
-        setClientSecret(data.paymentIntent.clientSecret)
+        const clientSecret = data.paymentIntent.client_secret;
+        setClientSecret(clientSecret)
+        // console.log("set clie in usebook", data.paymentIntent.client_secret)
         setPaymentIntentId(data.paymentIntent.id)
         router.push("/book-room")
-      }).catch((err) => {
-        // setIsLoading(false);
+      }).catch((err:any) => {
+        setIsLoading(false);
         console.log(err, "err ");
         toast({
           variant: "destructive",
@@ -345,7 +351,7 @@ return dates
 
         <Separator />
       </CardContent>
-      <CardFooter>
+      {!isPathBookRoom  && <CardFooter>
         {isPathHasDetails ? (
           <div className="flex flex-col gap-6">
             <div>
@@ -427,7 +433,8 @@ return dates
             </Dialog>
           </div>
         )}
-      </CardFooter>
+      </CardFooter>}
+      
     </Card>
   );
 };

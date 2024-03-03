@@ -19,7 +19,7 @@ const HotelCard = ({ hotel }: { hotel: hotelWithRooms }) => {
   const router = useRouter();
   const {getCountryByCode}=useLocation()
   const country=getCountryByCode(hotel.country)
-console.log("hotel from hotel card",hotel)
+// console.log("hotel from hotel card",hotel)
   return (
     <div
       onClick={() => !isMyHotels && router.push(`/hotel-details/${hotel.id}`)}

@@ -18,7 +18,8 @@ type RoomData = {
     breakfastIncluded: boolean,
     startDate: Date,
     endDate: Date
-}
+} 
+
 
 const useBookRoom = create<BookRoomStore>()(
     persist((set) => (

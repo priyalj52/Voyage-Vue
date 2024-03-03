@@ -1,6 +1,8 @@
+import BookRoomUI from "@/components/booking/BookRoomUI";
+
 const BookRoom = () => {
-    return ( <div>
-        Book room
+    return ( <div className="p-8">
+        <BookRoomUI/>
     </div> );
 }
  

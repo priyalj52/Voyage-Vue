@@ -220,7 +220,7 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
       src.substring(src.lastIndexOf("/") + 1);
 
     try {
-      const imageKey = getImageKey(hotel?.img);
+      const imageKey = await getImageKey(hotel?.img);
       // console.log("img key from deltehotel",getImageKey(hotel?.img))
       await axios.post("/api/uploadthing/delete", { imageKey });
       await axios.delete(`/api/hotel/${hotel.id}`);

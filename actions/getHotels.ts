@@ -8,7 +8,7 @@ export const getHotels = async (searchparams: {
 }) => {
     try {
         const { title, country, state, city } = searchparams;
-        console.log(searchparams);
+        // console.log(searchparams);
         
      
         const hotels = await prismaDB.hotel.findMany({
