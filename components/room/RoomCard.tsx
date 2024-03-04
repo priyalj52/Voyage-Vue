@@ -207,7 +207,7 @@ return dates
           .then(() => {
             router.refresh();
             toast({
-              variant: "success",
+              variant: "default",
               title: "Room deleted",
             });
             setIsLoading(false);

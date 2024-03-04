@@ -581,7 +581,7 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
                         which State is your hotel located
                       </FormDescription>
                       <Select
-                        disabled={isLoading || !!states.length < 1}
+                        disabled={isLoading || !!states.length}
                         onValueChange={field.onChange}
                         value={field.value}
                         defaultValue={field.value}
@@ -777,7 +777,6 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
             </div>
           </div>
         </form>
-      
       </Form>
     </div>
   );
