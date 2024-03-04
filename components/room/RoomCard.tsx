@@ -25,6 +25,7 @@ import {
   Mountain,
   Plus,
   Ship,
+  Speaker,
   Trash,
   TreePine,
   Tv,
@@ -329,7 +330,7 @@ return dates
 
           {room.soundProofed && (
             <AmenityItem>
-              <AudioListener className="w-4 h-4" /> Sound Proofed
+              <Speaker className="w-4 h-4" /> Sound Proofed
             </AmenityItem>
           )}
         </div>
