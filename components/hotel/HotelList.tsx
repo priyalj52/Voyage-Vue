@@ -1,4 +1,4 @@
-
+'use client'
 import { Hotel } from '@prisma/client'
 import React from 'react'
 import { hotelWithRooms } from './AddHotelForm'
