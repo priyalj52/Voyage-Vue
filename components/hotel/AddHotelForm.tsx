@@ -58,7 +58,7 @@ import { Separator } from "../ui/separator";
 import RoomCard from "../room/RoomCard";
 
 interface AddHotelFormProps {
-  hotel: hotelWithRooms | null;
+  hotel: hotelWithRooms | undefined;
 }
 export type hotelWithRooms = Hotel & {
   rooms: Room[];
