@@ -1,3 +1,4 @@
+
 import { getBookingsByOwnerId } from "@/actions/getBookingByOwnerId";
 import { getBookingsByUserId } from "@/actions/getBookingsByUserId";
 import MyBookingUI from "@/components/booking/MyBookingsUI";

@@ -1,3 +1,4 @@
+
 import getHotelsByUserId from "@/actions/getHotelsByUserId";
 import HotelList from "@/components/hotel/HotelList";
 
