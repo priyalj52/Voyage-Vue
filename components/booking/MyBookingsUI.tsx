@@ -292,10 +292,10 @@ const state = Hotel && Hotel.country && Hotel.state ? getStateByCode(Hotel.count
               <div className="text-blue-500">Breakfast will be served</div>
             )}
             {booking.paymentStatus ? (
-              <div className="text-green-500">Paid Rs ${booking.totalCost}-Room reserved</div>
+              <div className="text-green-500">Paid &#8377; {booking.totalCost}-Room reserved</div>
             ) : (
               <div className="text-red-500">
-                Not paid Rs ${booking.totalCost} ,Room Not Reserved
+                Not paid Rs {booking.totalCost} ,Room Not Reserved
               </div>
             )}
           </div>

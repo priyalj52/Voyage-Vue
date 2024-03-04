@@ -52,8 +52,8 @@ setPageLoaded(true)
   if (paymentSuccess){
     return (
       <div className="flex flex-col items-center gap-4">
-        <div className="text-black text-xl">Thank you for your payment!</div>
-        <Button onClick={() => router.push("/my-bookings")}>
+        <div className="text-black text-2xl text-semibold">Thank you for your payment!</div>
+        <Button  onClick={() => router.push("/my-bookings")}>
           view bookings
         </Button>
       </div>

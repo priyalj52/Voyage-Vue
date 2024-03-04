@@ -25,7 +25,7 @@ const router=useRouter()
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem className="flex items-center gap-2 cursor-pointer" onClick={() => router.push("/hotel/new")}>
+        <DropdownMenuItem className="flex items-center gap-2 cursor-pointer mt-4" onClick={() => router.push("/hotel/new")}>
           <Plus size={15} />
           <span>Add Hotel</span>
         </DropdownMenuItem>

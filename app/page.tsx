@@ -15,7 +15,7 @@ interface HomeProps{
 export default async function Home({searchParams}:HomeProps) {
  console.log("searh ",searchParams?.city)
  const hotels=await getHotels(searchParams) 
-  // why is it showing title undefined??
+
  if(!hotels)
  return <div>No hotels found</div>
   return (

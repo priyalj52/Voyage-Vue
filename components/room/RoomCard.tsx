@@ -377,7 +377,7 @@ return dates
 
             <div>
               Total Price :{" "}
-              <span className="font-bold">&#8377; ${totalPrice}</span> for
+              <span className="font-bold">&#8377; {totalPrice}</span> for
               <span className="font-bold">{days}days </span>
             </div>
             <Button disabled={isBookingLoading} type="button" onClick={() => { handleBookRoom() }}>

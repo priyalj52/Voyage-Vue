@@ -142,7 +142,7 @@ const CheckoutForm = ({
       console.log(err);
       setIsLoading(false);
     }
-    alert("hey room booked");
+    // alert("hey room booked");
     // router.refresh();
     //             resetBookRoom();
     //             handleSetSuccess(true);
@@ -176,10 +176,11 @@ const CheckoutForm = ({
           <div className="font-bold text-lg ">
             {bookingRoomData?.breakfastIncluded && (
               <div className="mb-2">
-                Breakfast Price: Rs {bookingRoomData.room.breakfastPrice}/day
+                <span className="font-bold"> Breakfast Price: &#8377;   {bookingRoomData.room.breakfastPrice}/day </span>
+              
               </div>
             )}
-            Total Price: ${bookingRoomData?.totalPrice}
+            Total Price: {bookingRoomData?.totalPrice}
           </div>
         </div>
         {isLoading && (
@@ -189,7 +190,7 @@ const CheckoutForm = ({
               <AlertTitle>Payment Processing.... </AlertTitle>
               <AlertDescription>
                 <div>
-                  Pleasse stay on this page as we processed your payment
+                  Please stay on this page as we process your payment
                 </div>
               </AlertDescription>
             </Alert>

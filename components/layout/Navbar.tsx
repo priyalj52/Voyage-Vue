@@ -11,7 +11,7 @@ export default function Navbar() {
   const router = useRouter();
   const { userId } = useAuth();
   return (
-    <div className="sticky top-0 border border-b-primary/10 bg-secondary">
+    <div className="sticky top-0 border border-b-primary/10 bg-secondary " style={{zIndex:100}}>
       <Container>
         <div className="flex justify-between items-center">
           <div
@@ -26,7 +26,7 @@ export default function Navbar() {
           </div>
 
           <div className="flex gap-3 items-center">
-            <div>
+            <div >
               <ModeToggle />
               <NavMenu />
             </div>

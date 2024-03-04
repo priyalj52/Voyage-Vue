@@ -718,7 +718,7 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
                     ) : (
                       <>
                         <Pencil className="mr-2 w-4 h-4" />
-                        Create HOtel
+                        Create Hotel
                       </>
                     )}
                   </Button>
@@ -777,7 +777,7 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
             </div>
           </div>
         </form>
-        <Button type="submit">Submit</Button>
+      
       </Form>
     </div>
   );

@@ -29,16 +29,19 @@ const HotelCard = ({ hotel }: { hotel: hotelWithRooms }) => {
       )}
     >
       <div className="flex gap-4 border bg-background/50 border-primary/10 round-lg">
-        <div className="flex-1 aspect-square overflow-hidden relative w-full h-[200px] rounded-s-lg">
+        <div className="flex-1 aspect-square overflow-hidden relative w-full  rounded-s-lg">
           <Image fill src={hotel.img} alt={hotel.title} className="w-full h-full object-cover" />
         </div>
-        <div className="flex-1 flex flex-col justify-between h-[200px] gap-1 py-2 p-1 text-sm">
+        <div className="flex-1 flex flex-col justify-between  gap-1 py-2 p-1 text-sm">
           <h2 className="font-bold text-xl">{hotel.title}</h2>  
           <div className="text-primary/90">{hotel.desc.substring(0,45)}...</div>
           <div className="text-primary/90">
             <AmenityItem>
                 <MapPinIcon className="w-4 h-4 " /> {country?.name},{hotel.city}
             </AmenityItem>
+            <div className="flex flex-wrap gap-2 items-center mt-3 mb-3">
+
+        
             {hotel.gym && (
                             <AmenityItem>
                                 <Dumbbell className="w-4 h-4" /> Gym
@@ -101,6 +104,7 @@ const HotelCard = ({ hotel }: { hotel: hotelWithRooms }) => {
                                 <MdMovie size={18}/> Movie Nights
                             </AmenityItem>
                         )}
+                            </div>
           </div>
           <div className="flex items-center justify-between">
 <div className="flex items-center gap-1">
