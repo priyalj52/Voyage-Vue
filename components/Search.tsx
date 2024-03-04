@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import qs from "query-string"
+import { useDebounceValue } from '../hooks/useDebounceValue';
 const SearchBox = () => {
   const searchParams=useSearchParams()
   const title=searchParams.get("title")
@@ -11,21 +12,22 @@ const SearchBox = () => {
 const router=useRouter()
 const pathName=usePathname()
 
-  const handleChange:ChangeEventHandler<HTMLElement>=(e)=>{
+  const handleChange:ChangeEventHandler<HTMLInputElement>=(e)=>{
 setVal(e.target.value)
   }
-
+const debounceVal=useDebounceValue<string>(val)
 
 useEffect(()=>{
 const query={
-title:val
+title:debounceVal
 }
 const url=qs.stringifyUrl({
   url:window.location.href,query
 
 },{skipNull:true,skipEmptyString:true})
+// console.log(url)
 router.push(url)
-},[val,router])
+},[debounceVal,router])
 
   if(pathName!=='/')
   return null

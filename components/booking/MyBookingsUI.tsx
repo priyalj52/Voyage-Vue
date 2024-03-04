@@ -27,6 +27,8 @@ import {
 
   Ship,
 
+  Speaker,
+
   TreePine,
   Tv,
   Users,
@@ -50,6 +52,7 @@ import {  useAuth } from "@clerk/nextjs";
 import useBookRoom from "@/hooks/useBookRoom";
 import useLocation from "@/hooks/useLocation";
 import moment from "moment";
+import { FaSoundcloud } from "react-icons/fa6";
 interface MyBookingUIProps {
   booking: Booking & { Room: Room | null } & { Hotel: Hotel | null };
 }
@@ -63,8 +66,13 @@ const MyBookingUI: React.FC<MyBookingUIProps> = ({ booking }) => {
   const router = useRouter();
   const [isBookingLoading, setIsBookingLoading] = useState(false);
   const { getCountryByCode, getStateByCode } = useLocation();
-  const country = getCountryByCode(Hotel?.country);
-  const state = getStateByCode(Hotel?.country, Hotel?.state);
+  // const country = getCountryByCode(Hotel?.country);
+  // const state = getStateByCode(Hotel?.country, Hotel?.state);
+  // Check if Hotel is defined first, then proceed with getting country
+const country = Hotel ? getCountryByCode(Hotel.country) : undefined;
+
+// Check if Hotel is defined and both country and state are defined, then proceed with getting state
+const state = Hotel && Hotel.country && Hotel.state ? getStateByCode(Hotel.country, Hotel.state) : undefined;
   const { userId } = useAuth();
   const startDate = moment(new Date(booking.startDate)).format("DD-YYYY-MM");
   const endDate = moment(new Date(booking.endDate)).format("DD-YYYY-MM");
@@ -250,7 +258,7 @@ const MyBookingUI: React.FC<MyBookingUIProps> = ({ booking }) => {
 
           {Room.soundProofed && (
             <AmenityItem>
-              <AudioListener className="w-4 h-4" /> Sound Proofed
+              <Speaker className="w-4 h-4" /> Sound Proofed
             </AmenityItem>
           )}
         </div>
@@ -259,7 +267,7 @@ const MyBookingUI: React.FC<MyBookingUIProps> = ({ booking }) => {
           <div>
             Room Price <span>&#8377;</span>
             <span className="font-bold">
-              {Room.RoomCost} <span className="text-xs">/24 hrs</span>{" "}
+              {Room.roomCost} <span className="text-xs">/24 hrs</span>{" "}
             </span>
           </div>
           {!!Room.breakfastPrice && (

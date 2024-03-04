@@ -6,6 +6,7 @@ import Navbar from "@/components/layout/Navbar";
 import { ThemeProvider } from "@/components/theme-provider";
 import Container from "@/components/Container";
 import { Toaster } from "@/components/ui/toaster";
+import { LocationFilter } from "@/components/LocationFilter";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -30,6 +31,7 @@ export default function RootLayout({
           >
             <main className="flex flex-col min-h-screen bg-secondary ">
               <Navbar />
+              <LocationFilter/>
               <section className=" flex-grow">
                 <Container>
                 <Toaster />
