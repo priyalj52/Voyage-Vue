@@ -54,7 +54,7 @@ const HotelCard = ({ hotel }: { hotel: hotelWithRooms }) => {
           </div>
           <div className="text-primary/90">
             <AmenityItem>
-              <MapPinIcon className="w-4 h-4 " /> {country?.name},{hotel.city}
+              <MapPinIcon className="w-4 h-4 " /> {hotel.city || hotel.state},{country?.name}
             </AmenityItem>
             <div className="flex flex-wrap gap-2 items-center mt-3 mb-3">
               {hotel.gym && (
