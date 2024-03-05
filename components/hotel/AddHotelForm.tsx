@@ -739,7 +739,7 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
                     <DialogHeader className="px-2">
                       <DialogTitle>Add a room</DialogTitle>
                       <DialogDescription>
-                        add details about room
+                        Add details about room
                       </DialogDescription>
                     </DialogHeader>
                     {hotel && (

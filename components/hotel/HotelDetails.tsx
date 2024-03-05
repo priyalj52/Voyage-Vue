@@ -43,7 +43,7 @@ const HotelDetails = ({
                         Location Details:
                     </h3>
                     <p className="text-primary/90 mb-2">{hotel?.locationDesc}</p>
-                    <h3 className="font-semibold text-lg  mt-4 mb-2">ABout the Hotel:</h3>
+                    <h3 className="font-semibold text-lg  mt-4 mb-2">About the Hotel:</h3>
                     <p className="text-primary/90 mb-2">{hotel?.desc}</p>
                     <h3 className="font-semibold text-lg  mt-4 mb-2">
                         Amenities Available:

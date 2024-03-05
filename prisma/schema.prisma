@@ -1,28 +1,25 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["fullTextSearch", "fullTextIndex"]
-  output   = "./generated/client"
+  previewFeatures = ["fullTextSearch", "fullTextIndex","driverAdapters"]
+   
 }
 
 datasource db {
-  provider     = "mysql"
-  url          = env("DATABASE_URL")
-  relationMode = "prisma"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  
 }
 
 model Hotel {
   id           String    @id @default(uuid())
   userID       String
   title        String    @db.Text
-  desc         String    @db.LongText
+  desc         String    @db.Text
   img          String
   country      String
   state        String
   city         String
-  locationDesc String    @db.LongText
+  locationDesc String    @db.Text
   gym          Boolean   @default(false)
   spa          Boolean   @default(false)
   bar          Boolean   @default(false)
@@ -40,13 +37,13 @@ model Hotel {
   rooms        Room[]
   bookings     Booking[]
 
-  @@fulltext([title]) //for search improvement
+  // @@fulltext([title]) //for search improvement
 }
 
 model Room {
   id             String  @id @default(uuid())
   title          String
-  desc           String  @db.LongText
+  desc           String  @db.Text
   bedCount       Int     @default(0)
   guestCount     Int     @default(0)
   bathRoomCount  Int     @default(0)
@@ -64,12 +61,11 @@ model Room {
   oceanView      Boolean @default(false)
   mountainView   Boolean @default(false)
   airCondition   Boolean @default(false)
+  soundProofed   Boolean @default(false)
+  hotelId        String
+  Hotel          Hotel?  @relation(fields: [hotelId], references: [id], onDelete: Cascade)
 
-  soundProofed Boolean @default(false)
-  hotelId      String
-  Hotel        Hotel?  @relation(fields: [hotelId], references: [id], onDelete: Cascade)
-
-  Booking Booking[]
+  Booking        Booking[]
 
   @@index([hotelId])
 }
@@ -91,9 +87,8 @@ model Booking {
   paymentIntentID   String   @unique
   bookedAt          DateTime @default(now())
 
-  Hotel Hotel? @relation(fields: [hotelId], references: [id])
-
-  Room Room? @relation(fields: [roomId], references: [id])
+  Hotel             Hotel?   @relation(fields: [hotelId], references: [id])
+  Room              Room?    @relation(fields: [roomId], references: [id])
 
   @@index([hotelId])
   @@index([roomId])
