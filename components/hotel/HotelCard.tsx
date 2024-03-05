@@ -9,7 +9,17 @@ import AmenityItem from "../ui/amenity";
 import useLocation from "@/hooks/useLocation";
 import { Button } from "../ui/button";
 
-import { Bike, Coffee, Dumbbell, MapPinIcon, ParkingCircle, ShoppingBag, Waves, Wifi, Wine } from "lucide-react";
+import {
+  Bike,
+  Coffee,
+  Dumbbell,
+  MapPinIcon,
+  ParkingCircle,
+  ShoppingBag,
+  Waves,
+  Wifi,
+  Wine,
+} from "lucide-react";
 import { MdDryCleaning, MdMovie, MdRestaurant } from "react-icons/md";
 import { FaSpa } from "react-icons/fa6";
 
@@ -17,9 +27,9 @@ const HotelCard = ({ hotel }: { hotel: hotelWithRooms }) => {
   const pathname = usePathname();
   const isMyHotels = pathname.includes("my-hotels");
   const router = useRouter();
-  const {getCountryByCode}=useLocation()
-  const country=getCountryByCode(hotel.country)
-// console.log("hotel from hotel card",hotel)
+  const { getCountryByCode } = useLocation();
+  const country = getCountryByCode(hotel.country);
+  // console.log("hotel from hotel card",hotel)
   return (
     <div
       onClick={() => !isMyHotels && router.push(`/hotel-details/${hotel.id}`)}
@@ -30,95 +40,107 @@ const HotelCard = ({ hotel }: { hotel: hotelWithRooms }) => {
     >
       <div className="flex gap-4 border bg-background/50 border-primary/10 round-lg">
         <div className="flex-1 aspect-square overflow-hidden relative w-full  rounded-s-lg">
-          <Image fill src={hotel.img} alt={hotel.title} className="w-full h-full object-cover" />
+          <Image
+            fill
+            src={hotel.img}
+            alt={hotel.title}
+            className="w-full h-full object-cover"
+          />
         </div>
         <div className="flex-1 flex flex-col justify-between  gap-1 py-2 p-1 text-sm">
-          <h2 className="font-bold text-xl">{hotel.title}</h2>  
-          <div className="text-primary/90">{hotel.desc.substring(0,45)}...</div>
+          <h2 className="font-bold text-xl">{hotel.title}</h2>
+          <div className="text-primary/90">
+            {hotel.desc.substring(0, 45)}...
+          </div>
           <div className="text-primary/90">
             <AmenityItem>
-                <MapPinIcon className="w-4 h-4 " /> {country?.name},{hotel.city}
+              <MapPinIcon className="w-4 h-4 " /> {country?.name},{hotel.city}
             </AmenityItem>
             <div className="flex flex-wrap gap-2 items-center mt-3 mb-3">
+              {hotel.gym && (
+                <AmenityItem>
+                  <Dumbbell className="w-4 h-4" /> Gym
+                </AmenityItem>
+              )}
 
-        
-            {hotel.gym && (
-                            <AmenityItem>
-                                <Dumbbell className="w-4 h-4" /> Gym
-                            </AmenityItem>
-                        )}
+              {hotel.spa && (
+                <AmenityItem>
+                  <FaSpa size={18} /> Spa
+                </AmenityItem>
+              )}
 
+              {hotel.swimmingPool && (
+                <AmenityItem>
+                  <Waves className="w-4 h-4" /> pool
+                </AmenityItem>
+              )}
 
+              {hotel.restaurant && (
+                <AmenityItem>
+                  <MdRestaurant size={18} /> Restaurant
+                </AmenityItem>
+              )}
 
-{hotel.spa && (
-                            <AmenityItem>
-                              <FaSpa size={18} /> Spa
-                            </AmenityItem>
-                        )}
+              {hotel.freeParking && (
+                <AmenityItem>
+                  <ParkingCircle className="w-4 h-4" /> Free Parking
+                </AmenityItem>
+              )}
 
-{hotel.swimmingPool && (
-                            <AmenityItem>
-                                <Waves className="w-4 h-4" /> pool
-                            </AmenityItem>
-                        )}
+              {hotel.bikeRental && (
+                <AmenityItem>
+                  <Bike className="w-4 h-4" />
+                  Bike rental
+                </AmenityItem>
+              )}
 
-{hotel.restaurant&& (
-                            <AmenityItem>
-                                <MdRestaurant size={18}/> Restaurant
-                            </AmenityItem>
-                        )}
+              {hotel.coffeeShop && (
+                <AmenityItem>
+                  <Coffee className="w-4 h-4" /> Coffee Shop
+                </AmenityItem>
+              )}
 
-{hotel.freeParking&& (
-                            <AmenityItem>
-                                <ParkingCircle className="w-4 h-4"  /> Free Parking
-                            </AmenityItem>
-                        )}
+              {hotel.freeWifi && (
+                <AmenityItem>
+                  <Wifi className="w-4 h-4" /> Free wifi
+                </AmenityItem>
+              )}
 
-{hotel.bikeRental&& (
-                            <AmenityItem>
-                                <Bike className="w-4 h-4" />Bike rental
-                            </AmenityItem>
-                        )}
+              {hotel.shopping && (
+                <AmenityItem>
+                  <ShoppingBag className="w-4 h-4" /> Shopping
+                </AmenityItem>
+              )}
 
-{hotel.coffeeShop && (
-                            <AmenityItem>
-                                <Coffee className="w-4 h-4"  /> Coffee Shop
-                            </AmenityItem>
-                        )}
-
-{hotel.freeWifi && (
-                            <AmenityItem>
-                                <Wifi className="w-4 h-4" /> Free wifi
-                            </AmenityItem>
-                        )}
-
-{hotel.shopping && (
-                            <AmenityItem>
-                                <ShoppingBag className="w-4 h-4" /> Shopping
-                            </AmenityItem>
-                        )}
-
-
-{hotel.movieNights&& (
-                            <AmenityItem>
-                                <MdMovie size={18}/> Movie Nights
-                            </AmenityItem>
-                        )}
-                            </div>
+              {hotel.movieNights && (
+                <AmenityItem>
+                  <MdMovie size={18} /> Movie Nights
+                </AmenityItem>
+              )}
+            </div>
           </div>
           <div className="flex items-center justify-between">
-<div className="flex items-center gap-1">
-    {hotel?.rooms[0]?.roomCost && <>
-    <div className="flex items-center gap-1">
-    <span>&#8377;</span>
-    <div className="text-sm font-semibold">{hotel?.rooms[0]?.roomCost}</div>
-    <div className="text-sm ">/24hrs</div>
-    
-    </div>
-    </>}
-</div>
-{isMyHotels && 
-<Button  variant={"outline"} onClick={()=>router.push(`/hotel/${hotel.id}`)}>Edit</Button> }
+            <div className="flex items-center gap-1">
+              {hotel?.rooms[0]?.roomCost && (
+                <>
+                  <div className="flex items-center gap-1">
+                    <span>&#8377;</span>
+                    <div className="text-sm font-semibold">
+                      {hotel?.rooms[0]?.roomCost}
+                    </div>
+                    <div className="text-sm ">/24hrs</div>
+                  </div>
+                </>
+              )}
+            </div>
+            {isMyHotels && (
+              <Button
+                variant={"outline"}
+                onClick={() => router.push(`/hotel/${hotel.id}`)}
+              >
+                Edit
+              </Button>
+            )}
           </div>
         </div>
       </div>

@@ -10,13 +10,16 @@ interface hotelPageProps {
 const page = async ({ params }: hotelPageProps) => {
   console.log(params.hotelId, "hotelid hey");
   const hotel = await getHotelById(params.hotelId);
+  console.log(hotel, "hotel hey");
+
+
   const { userId } = auth();
   if (hotel && hotel.userID !== userId) return <div>Access Denied</div>;
   if (!userId) return <div>Not Authenticated</div>;
 
   return (
     <div>
-     {hotel && <AddHotelForm hotel={hotel} />}
+     { <AddHotelForm hotel={hotel} />}
     </div>
   );
 };

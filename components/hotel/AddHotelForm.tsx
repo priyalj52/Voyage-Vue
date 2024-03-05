@@ -58,7 +58,7 @@ import { Separator } from "../ui/separator";
 import RoomCard from "../room/RoomCard";
 
 interface AddHotelFormProps {
-  hotel: hotelWithRooms | undefined;
+  hotel: hotelWithRooms | null;
 }
 export type hotelWithRooms = Hotel & {
   rooms: Room[];
@@ -581,7 +581,7 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
                         which State is your hotel located
                       </FormDescription>
                       <Select
-                        disabled={isLoading || !!states.length}
+                        disabled={isLoading || states.length<1}
                         onValueChange={field.onChange}
                         value={field.value}
                         defaultValue={field.value}
@@ -742,10 +742,12 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
                         add details about room
                       </DialogDescription>
                     </DialogHeader>
-                    <AddRoomForm
-                      hotel={hotel}
-                      handleDialogOpen={handleDialogOpen}
-                    />
+                    {hotel && (
+                      <AddRoomForm
+                        hotel={hotel}
+                        handleDialogOpen={handleDialogOpen}
+                      />
+                    )}
                   </DialogContent>
                 </Dialog>
 
