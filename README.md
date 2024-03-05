@@ -1,6 +1,6 @@
-# NEXT.JS Full Stack Hotel Booking Application
-## Built using Next.JS,Typescript, MySQl,Prisma,Shadcn UI,TailwindCSS,Stripe
-### Application can perform the following operations
+## Full Stack Hotel Booking Application
+### Built using Next.JS,Typescript, PostgreSQL,Prisma,Tailwind CSS,Stripe
+#### Features-
 <ul>
   <li> Light/Dark mode is available . </li>
   <li>User Can register /login </li>
