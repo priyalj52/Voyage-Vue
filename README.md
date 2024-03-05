@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# NEXT.JS Full Stack Hotel Booking Application
+## Built using Next.JS, MySQl,Prisma,Shadcn UI,TailwindCSS,Stripe
+### Application can perform the following operations
+<ul>
+  <li> Light/Dark mode is available . </li>
+  <li>User Can register /login </li>
+  <li>After login , User can -
+    <ul> <li>  Add a hotel </li>
+      <li> Add rooms to their hotel </li>
+      <li>Make bookings, to confirm their booking they need to pay through stripe  </li>
+      <li>  Can see their bookings and also the booking made to their hotels by vistors  </li>
+    </ul>
+  </li>
+  <li>User can perform Search or Location filters to see hotels of their choice</li>
+</ul>
 
-## Getting Started
+### SNAPSHOTS
+## MAIN PAGE VOYAGE VUE
+<img src="https://github.com/priyalj52/Voyage-Vue/assets/94099575/0eb149d2-b3c5-4b7d-8190-e2891b3698e2"/>
 
-First, run the development server:
+## HOTEL
+### MY HOTELS
+<img src="https://github.com/priyalj52/Voyage-Vue/assets/94099575/34e4559b-8db6-4aee-acea-fa878a500d9a"/>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### ADD HOTEL FORM
+<img src="https://github.com/priyalj52/Voyage-Vue/assets/94099575/a35c3d5d-813f-4dab-86f3-3fa03802f626"/>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### HOTEL CARD
+<img src="https://github.com/priyalj52/Voyage-Vue/assets/94099575/2e3151bb-1bc5-46d7-b135-269584158ab8"/>
 
-## Learn More
+## BOOKINGS
 
-To learn more about Next.js, take a look at the following resources:
+### CHECKOUT FORM
+<img src="https://github.com/priyalj52/Voyage-Vue/assets/94099575/a4bc65b2-6160-409e-a60b-be0722a14a84"/>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### MY BOOKINGS
+<img src="https://github.com/priyalj52/Voyage-Vue/assets/94099575/86ecae17-7399-4558-a636-b4e21b06c36a"/>
