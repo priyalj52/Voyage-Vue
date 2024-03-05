@@ -1,5 +1,5 @@
 # NEXT.JS Full Stack Hotel Booking Application
-## Built using Next.JS, MySQl,Prisma,Shadcn UI,TailwindCSS,Stripe
+## Built using Next.JS,Typescript, MySQl,Prisma,Shadcn UI,TailwindCSS,Stripe
 ### Application can perform the following operations
 <ul>
   <li> Light/Dark mode is available . </li>
