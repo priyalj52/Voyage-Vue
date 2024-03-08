@@ -8,7 +8,7 @@
     <ul> <li>  Add a hotel </li>
       <li> Add rooms to their hotel </li>
       <li>Make bookings, to confirm their booking they need to pay through stripe  </li>
-      <li>  Can see their bookings and also the booking made to their hotels by vistors  </li>
+      <li>  Can see their bookings and also the booking made to their hotels by visitors  </li>
     </ul>
   </li>
   <li>User can perform Search or Location filters to see hotels of their choice</li>
@@ -28,7 +28,8 @@
 
 
 ### HOTEL CARD
-<img src="https://github.com/priyalj52/Voyage-Vue/assets/94099575/2e3151bb-1bc5-46d7-b135-269584158ab8"/>
+<img src="https://github.com/priyalj52/Voyage-Vue/assets/94099575/19dd280a-9f8e-440d-9e04-ac3898e07570"
+/>
 
 ## BOOKINGS
 
